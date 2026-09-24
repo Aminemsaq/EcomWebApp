@@ -7,6 +7,7 @@ import com.example.app.dto.ProductResponse;
 import com.example.app.model.Product;
 import com.example.app.repository.ProductRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -55,5 +56,14 @@ public class ProductService {
         if (productRequest.getActive() != null) {
             existingProduct.setActive(productRequest.getActive());
         }
+    }
+
+    public ProductResponse updateProduct(Long id, ProductRequest productRequest) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+
+        updateProductFromRequest(existingProduct, productRequest);
+
+        return mapToProductResponse(existingProduct);
     }
 }
