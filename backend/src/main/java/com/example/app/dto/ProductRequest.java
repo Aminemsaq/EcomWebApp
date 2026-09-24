@@ -2,9 +2,9 @@ package com.example.app.dto;
 
 import java.math.BigDecimal;
 
-/**
- * ProductRequest
- */
+import lombok.Data;
+
+@Data
 public class ProductRequest {
     private String name;
     private String description;
